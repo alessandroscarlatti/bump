@@ -1,8 +1,13 @@
 package com.scarlatti.bump.cli;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.scarlatti.bump.actions.BumpMajorVersion;
 import com.scarlatti.bump.actions.BumpMinorVersion;
 import com.scarlatti.bump.actions.BumpPatchVersion;
+import com.scarlatti.bump.cli.actionCreators.BumpMajorVersionActionCreator;
+import com.scarlatti.bump.cli.actionCreators.BumpMinorVersionActionCreator;
+import com.scarlatti.bump.cli.actionCreators.BumpPatchVersionActionCreator;
 import org.apache.commons.cli.CommandLine;
 
 /**
@@ -12,21 +17,33 @@ import org.apache.commons.cli.CommandLine;
  * /_/ |_/_/\__/___/___/\_,_/_//_/\_,_/_/  \___/ /___/\__/\_,_/_/ /_/\_,_/\__/\__/_/
  * Thursday, 1/25/2018
  */
+@Singleton
 public class ActionFactory {
 
-    public static class BumpMajorVersion {
+    private BumpMajorVersionActionCreator bumpMajorVersion;
+    private BumpMinorVersionActionCreator bumpMinorVersion;
+    private BumpPatchVersionActionCreator bumpPatchVersion;
 
+    @Inject
+    public ActionFactory(
+        BumpMajorVersionActionCreator bumpMajorVersion,
+        BumpMinorVersionActionCreator bumpMinorVersion,
+        BumpPatchVersionActionCreator bumpPatchVersion
+    ) {
+        this.bumpMajorVersion = bumpMajorVersion;
+        this.bumpMinorVersion = bumpMinorVersion;
+        this.bumpPatchVersion = bumpPatchVersion;
     }
 
-    public static BumpMajorVersion bumpMajorVersion(CommandLine cli) {
-        return new BumpMajorVersion();
+    public BumpMajorVersionActionCreator getBumpMajorVersion() {
+        return bumpMajorVersion;
     }
 
-    public static BumpMinorVersion bumpMinorVersion(CommandLine cli) {
-        return new BumpMinorVersion();
+    public BumpMinorVersionActionCreator getBumpMinorVersion() {
+        return bumpMinorVersion;
     }
 
-    public static BumpPatchVersion bumpPatchVersion(CommandLine cli) {
-        return new BumpPatchVersion();
+    public BumpPatchVersionActionCreator getBumpPatchVersion() {
+        return bumpPatchVersion;
     }
 }

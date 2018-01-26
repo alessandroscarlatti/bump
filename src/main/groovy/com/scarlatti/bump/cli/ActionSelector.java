@@ -25,13 +25,15 @@ public class ActionSelector {
 
     private CommandLineParser parser;
     private Options options;
+    private ActionFactory actionFactory;
 
     private static final Logger log = LoggerFactory.getLogger(App.class);
 
     @Inject
-    public ActionSelector(CommandLineParser parser, Options options) {
+    public ActionSelector(CommandLineParser parser, Options options, ActionFactory actionFactory) {
         this.parser = parser;
         this.options = options;
+        this.actionFactory = actionFactory;
     }
 
     /**
@@ -54,16 +56,20 @@ public class ActionSelector {
             if (cliArgs.length > 0) {
                 if (cliArgs[0].equals(Option.BUMP_MAJOR.getShortName()) ||
                     cliArgs[0].equals(Option.BUMP_MAJOR.getLongName())) {
-                    log.info("Selecting action " + );
-                    return ActionFactory.bumpMajorVersion(cli);
+                    log.info("Selecting action " + actionFactory.getBumpMajorVersion().name());
+                    return actionFactory.getBumpMajorVersion().create(cli);
                 }
 
                 if (cliArgs[0].equals(Option.BUMP_PATCH.getShortName()) ||
-                    cliArgs[0].equals(Option.BUMP_PATCH.getLongName())) return ActionFactory.bumpPatchVersion(cli);
+                    cliArgs[0].equals(Option.BUMP_PATCH.getLongName())) {
+                    log.info("Selecting action " + actionFactory.getBumpPatchVersion().name());
+                    return actionFactory.getBumpPatchVersion().create(cli);
+                }
 
                 throw new IllegalArgumentException("Unrecognized arguments: " + Arrays.toString(args));
             } else {
-                return ActionFactory.bumpMinorVersion(cli);
+                log.info("Selecting action " + actionFactory.getBumpMinorVersion().name());
+                return actionFactory.getBumpMinorVersion().create(cli);
             }
         } catch (ParseException e) {
             throw new IllegalStateException("Unable to parse command line args: " + Arrays.toString(args));
