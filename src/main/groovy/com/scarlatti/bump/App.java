@@ -4,6 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.scarlatti.bump.actions.Action;
+import com.scarlatti.bump.actions.ActionsConfig;
 import com.scarlatti.bump.cli.ActionSelector;
 import com.scarlatti.bump.cli.CLIConfig;
 import org.slf4j.Logger;
@@ -19,23 +20,24 @@ import org.slf4j.LoggerFactory;
 public class App {
 
     private ActionSelector actionSelector;
+    private BannerDisplay bannerDisplay;
 
     private static final Logger log = LoggerFactory.getLogger(App.class);
 
     @Inject
-    public App(ActionSelector actionSelector) {
+    public App(ActionSelector actionSelector, BannerDisplay bannerDisplay) {
         this.actionSelector = actionSelector;
+        this.bannerDisplay = bannerDisplay;
     }
 
     public static void main(String[] args) {
-        Injector injector = Guice.createInjector(new CLIConfig());
+        Injector injector = Guice.createInjector(new CLIConfig(), new ActionsConfig());
         injector.getInstance(App.class).run(args);
     }
 
     public void run(String[] args) {
-        Action action = chooseAction(args);
+        bannerDisplay.displayBanner();
+        Action action = actionSelector.chooseAction(args);
         action.perform();
     }
-
-
 }

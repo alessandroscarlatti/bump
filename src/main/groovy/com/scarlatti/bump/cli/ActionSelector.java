@@ -47,7 +47,7 @@ public class ActionSelector {
      * @param args the raw command line arguments
      * @return the action to perform
      */
-    private Action chooseAction(String[] args) {
+    public Action chooseAction(String[] args) {
         try {
             CommandLine cli = parser.parse(options, args);
 

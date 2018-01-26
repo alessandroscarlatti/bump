@@ -3,6 +3,7 @@ package com.scarlatti.bump.cli;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
+import com.google.inject.name.Named;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.Options;
@@ -35,7 +36,14 @@ public class CLIConfig extends AbstractModule {
 
     @Provides
     @Singleton
-    CommandLineParser commandLineParser() {
+    private CommandLineParser commandLineParser() {
         return new BasicParser();
+    }
+
+    @Provides
+    @Singleton
+    @Named("workingDir")
+    private String workingDir() {
+        return System.getProperty("user.dir");
     }
 }
