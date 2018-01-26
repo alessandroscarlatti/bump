@@ -2,7 +2,7 @@ package com.scarlatti.bump.actions;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import com.scarlatti.bump.version.Version;
+import com.scarlatti.bump.model.Version;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,7 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static com.scarlatti.bump.cli.CLIConfig.*;
+import static com.scarlatti.bump.config.CLIConfig.*;
 
 /**
  * ______    __                         __           ____             __     __  __  _

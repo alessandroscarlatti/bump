@@ -1,4 +1,4 @@
-package com.scarlatti.bump.actions;
+package com.scarlatti.bump.config;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;

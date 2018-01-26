@@ -10,7 +10,7 @@ import org.apache.commons.cli.ParseException;
 
 import java.util.Arrays;
 
-import static com.scarlatti.bump.cli.CLIConfig.TWO_COLUMN_FORMAT;
+import static com.scarlatti.bump.config.CLIConfig.TWO_COLUMN_FORMAT;
 
 /**
  * ______    __                         __           ____             __     __  __  _

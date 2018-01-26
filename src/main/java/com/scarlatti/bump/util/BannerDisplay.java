@@ -1,4 +1,4 @@
-package com.scarlatti.bump;
+package com.scarlatti.bump.util;
 
 import com.google.inject.Singleton;
 

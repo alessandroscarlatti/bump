@@ -1,9 +1,9 @@
 package com.scarlatti.bump.actions;
 
 import com.google.inject.Inject;
-import com.scarlatti.bump.version.Version;
+import com.scarlatti.bump.model.Version;
 
-import static com.scarlatti.bump.cli.CLIConfig.TWO_COLUMN_FORMAT;
+import static com.scarlatti.bump.config.CLIConfig.TWO_COLUMN_FORMAT;
 
 /**
  * ______    __                         __           ____             __     __  __  _

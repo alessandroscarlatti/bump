@@ -1,4 +1,4 @@
-package com.scarlatti.bump.version;
+package com.scarlatti.bump.model;
 
 /**
  * ______    __                         __           ____             __     __  __  _
