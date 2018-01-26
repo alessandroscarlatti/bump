@@ -33,6 +33,8 @@ public class BumpMinorVersion extends Action {
         Version newVersion = new Version(currentVersion);
         newVersion.bumpMinor();
 
+        defaultVersionAction.approveNewVersion(currentVersion, newVersion);
+
         log.info("Saving...");
         defaultVersionAction.setVersion(
             defaultVersionAction.getDefaultVersionFile(),

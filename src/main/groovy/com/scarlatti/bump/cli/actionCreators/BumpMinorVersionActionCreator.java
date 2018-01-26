@@ -1,5 +1,7 @@
 package com.scarlatti.bump.cli.actionCreators;
 
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.scarlatti.bump.actions.Action;
 import com.scarlatti.bump.actions.BumpMajorVersion;
@@ -16,11 +18,17 @@ import org.apache.commons.cli.CommandLine;
 @Singleton
 public class BumpMinorVersionActionCreator implements ActionCreator {
 
+    private Provider<BumpMinorVersion> bumpMinorVersionProvider;
     private final String NAME = "Bump Major Version";
+
+    @Inject
+    public BumpMinorVersionActionCreator(Provider<BumpMinorVersion> bumpMinorVersionProvider) {
+        this.bumpMinorVersionProvider = bumpMinorVersionProvider;
+    }
 
     @Override
     public BumpMinorVersion create(CommandLine cli) {
-        return new BumpMinorVersion();
+        return bumpMinorVersionProvider.get();
     }
 
     @Override

@@ -36,6 +36,8 @@ public class BumpPatchVersion extends Action {
         Version newVersion = new Version(currentVersion);
         newVersion.bumpPatch();
 
+        defaultVersionAction.approveNewVersion(currentVersion, newVersion);
+
         log.info("Saving...");
         defaultVersionAction.setVersion(
             defaultVersionAction.getDefaultVersionFile(),

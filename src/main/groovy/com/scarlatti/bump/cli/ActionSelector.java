@@ -49,6 +49,7 @@ public class ActionSelector {
      */
     public Action chooseAction(String[] args) {
         try {
+            log.info("Received arguments: " + Arrays.toString(args));
             CommandLine cli = parser.parse(options, args);
 
             String[] cliArgs = cli.getArgs();
