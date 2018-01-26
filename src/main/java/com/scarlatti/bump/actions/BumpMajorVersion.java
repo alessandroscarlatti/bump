@@ -2,8 +2,8 @@ package com.scarlatti.bump.actions;
 
 import com.google.inject.Inject;
 import com.scarlatti.bump.version.Version;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import static com.scarlatti.bump.cli.CLIConfig.TWO_COLUMN_FORMAT;
 
 /**
  * ______    __                         __           ____             __     __  __  _
@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 public class BumpMajorVersion extends Action {
 
     private DefaultVersionAction defaultVersionAction;
-    private final static Logger log = LoggerFactory.getLogger(Action.class);
 
     @Inject
     public BumpMajorVersion(DefaultVersionAction defaultVersionAction) {
@@ -28,18 +27,17 @@ public class BumpMajorVersion extends Action {
         Version currentVersion = defaultVersionAction.getCurrentVersion(
             defaultVersionAction.getDefaultVersionFile());
 
-        log.info("Current version is: " + currentVersion.toSemanticString());
+        System.out.printf(TWO_COLUMN_FORMAT, ":Current Version", currentVersion.toSemanticString());
 
         // bump version
         Version newVersion = new Version(currentVersion);
         newVersion.bumpMajor();
 
-        defaultVersionAction.approveNewVersion(currentVersion, newVersion);
-
-        log.info("Saving...");
-        defaultVersionAction.setVersion(
-            defaultVersionAction.getDefaultVersionFile(),
-            newVersion.toSemanticString()
-        );
+        if (defaultVersionAction.approveNewVersion(currentVersion, newVersion)) {
+            defaultVersionAction.setVersion(
+                defaultVersionAction.getDefaultVersionFile(),
+                newVersion.toSemanticString()
+            );
+        }
     }
 }

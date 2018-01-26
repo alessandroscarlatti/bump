@@ -7,8 +7,6 @@ import com.scarlatti.bump.actions.Action;
 import com.scarlatti.bump.actions.ActionsConfig;
 import com.scarlatti.bump.cli.ActionSelector;
 import com.scarlatti.bump.cli.CLIConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * ______    __                         __           ____             __     __  __  _
@@ -22,8 +20,6 @@ public class App {
     private ActionSelector actionSelector;
     private BannerDisplay bannerDisplay;
 
-    private static final Logger log = LoggerFactory.getLogger(App.class);
-
     @Inject
     public App(ActionSelector actionSelector, BannerDisplay bannerDisplay) {
         this.actionSelector = actionSelector;
@@ -31,6 +27,7 @@ public class App {
     }
 
     public static void main(String[] args) {
+
         Injector injector = Guice.createInjector(new CLIConfig(), new ActionsConfig());
         injector.getInstance(App.class).run(args);
     }

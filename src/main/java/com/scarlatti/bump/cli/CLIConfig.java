@@ -16,6 +16,11 @@ import org.apache.commons.cli.Options;
  * Thursday, 1/25/2018
  */
 public class CLIConfig extends AbstractModule {
+
+    public static final String TWO_COLUMN_FORMAT = "%-60s%s%n";
+    public static final String FIRST_HALF_FORMAT = "%-60s";
+    public static final String SECOND_HALF_FORMAT = "%s%n";
+
     @Override
     protected void configure() {
         // I may not need to configure much here!!

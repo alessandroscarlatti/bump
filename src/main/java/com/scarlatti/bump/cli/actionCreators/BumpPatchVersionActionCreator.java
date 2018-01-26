@@ -19,7 +19,7 @@ import org.apache.commons.cli.CommandLine;
 public class BumpPatchVersionActionCreator implements ActionCreator {
 
     private Provider<BumpPatchVersion> bumpPatchVersionProvider;
-    private final String NAME = "Bump Major Version";
+    private final String NAME = "Bump Patch Version";
 
     @Inject
     public BumpPatchVersionActionCreator(Provider<BumpPatchVersion> bumpPatchVersionProvider) {

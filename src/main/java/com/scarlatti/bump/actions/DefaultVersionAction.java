@@ -3,8 +3,6 @@ package com.scarlatti.bump.actions;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import com.scarlatti.bump.version.Version;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,6 +16,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import static com.scarlatti.bump.cli.CLIConfig.*;
+
 /**
  * ______    __                         __           ____             __     __  __  _
  * ___/ _ | / /__ ___ ___ ___ ____  ___/ /______    / __/______ _____/ /__ _/ /_/ /_(_)
@@ -29,8 +29,6 @@ public class DefaultVersionAction {
 
     private String defaultVersionFile;
     private String workingDir;
-
-    private static final Logger log = LoggerFactory.getLogger(DefaultVersionAction.class);
 
     @Inject
     public DefaultVersionAction(
@@ -93,14 +91,20 @@ public class DefaultVersionAction {
             // now write the file
             Files.write(path, lines);
 
+            System.out.printf(String.format(TWO_COLUMN_FORMAT, ":Saving", "Saved").replace(" ", "."));
+
         } catch (IOException e) {
-            log.info("Original file: \n" + String.join("", lines));
+
+            System.out.printf(String.format(TWO_COLUMN_FORMAT, ":Saving", "Failed").replace(" ", "."));
+
+            System.out.printf("Original file:%n%s%n", String.join("", lines));
             throw new RuntimeException("Failed to save file!");
         }
     }
 
     public boolean approveNewVersion(Version currentVersion, Version newVersion) {
-        log.info("New Version OK " + newVersion.toSemanticString() + " (Enter to approve)?");
+        System.out.printf(TWO_COLUMN_FORMAT, ":New Version OK?", newVersion.toSemanticString());
+        System.out.printf(FIRST_HALF_FORMAT, "(Enter to approve)");
 
         Scanner scanner = new Scanner(System.in);
 
@@ -108,10 +112,10 @@ public class DefaultVersionAction {
         // this line only reached if program not aborted
         // but just in case no is entered...
         if ("yes".startsWith(accepted)) {
-            log.info("Version " + newVersion.toSemanticString() + " approved");
+            System.out.printf(TWO_COLUMN_FORMAT, "", "Approved");
             return true;
         } else {
-            log.info("Bump declined.");
+            System.out.printf(TWO_COLUMN_FORMAT, "", "Declined");
             return false;
         }
     }

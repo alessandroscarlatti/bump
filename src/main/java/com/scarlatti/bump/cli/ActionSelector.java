@@ -2,16 +2,15 @@ package com.scarlatti.bump.cli;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.scarlatti.bump.App;
 import com.scarlatti.bump.actions.Action;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+
+import static com.scarlatti.bump.cli.CLIConfig.TWO_COLUMN_FORMAT;
 
 /**
  * ______    __                         __           ____             __     __  __  _
@@ -26,8 +25,6 @@ public class ActionSelector {
     private CommandLineParser parser;
     private Options options;
     private ActionFactory actionFactory;
-
-    private static final Logger log = LoggerFactory.getLogger(App.class);
 
     @Inject
     public ActionSelector(CommandLineParser parser, Options options, ActionFactory actionFactory) {
@@ -49,7 +46,7 @@ public class ActionSelector {
      */
     public Action chooseAction(String[] args) {
         try {
-            log.info("Received arguments: " + Arrays.toString(args));
+            System.out.printf(TWO_COLUMN_FORMAT, ":Received arguments", Arrays.toString(args));
             CommandLine cli = parser.parse(options, args);
 
             String[] cliArgs = cli.getArgs();
@@ -57,19 +54,25 @@ public class ActionSelector {
             if (cliArgs.length > 0) {
                 if (cliArgs[0].equals(Option.BUMP_MAJOR.getShortName()) ||
                     cliArgs[0].equals(Option.BUMP_MAJOR.getLongName())) {
-                    log.info("Selecting action " + actionFactory.getBumpMajorVersion().name());
+                    System.out.printf(TWO_COLUMN_FORMAT, ":Selecting action", actionFactory.getBumpMajorVersion().name());
                     return actionFactory.getBumpMajorVersion().create(cli);
                 }
 
                 if (cliArgs[0].equals(Option.BUMP_PATCH.getShortName()) ||
                     cliArgs[0].equals(Option.BUMP_PATCH.getLongName())) {
-                    log.info("Selecting action " + actionFactory.getBumpPatchVersion().name());
+                    System.out.printf(TWO_COLUMN_FORMAT, ":Selecting action", actionFactory.getBumpPatchVersion().name());
                     return actionFactory.getBumpPatchVersion().create(cli);
+                }
+
+                if (cliArgs[0].equals(Option.BUMP_MINOR.getShortName()) ||
+                    cliArgs[0].equals(Option.BUMP_MINOR.getLongName())) {
+                    System.out.printf(TWO_COLUMN_FORMAT, ":Selecting action", actionFactory.getBumpMinorVersion().name());
+                    return actionFactory.getBumpMinorVersion().create(cli);
                 }
 
                 throw new IllegalArgumentException("Unrecognized arguments: " + Arrays.toString(args));
             } else {
-                log.info("Selecting action " + actionFactory.getBumpMinorVersion().name());
+                System.out.printf(TWO_COLUMN_FORMAT, ":Selecting action", actionFactory.getBumpMinorVersion().name());
                 return actionFactory.getBumpMinorVersion().create(cli);
             }
         } catch (ParseException e) {

@@ -29,10 +29,13 @@ public class Version {
 
     public void bumpMajor() {
         major++;
+        minor = 0;
+        patch = 0;
     }
 
     public void bumpMinor() {
         minor++;
+        patch = 0;
     }
 
     public void bumpPatch() {
