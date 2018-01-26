@@ -4,9 +4,10 @@ import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.scarlatti.bump.actions.Action;
-import com.scarlatti.bump.actions.ActionsConfig;
+import com.scarlatti.bump.config.ActionsConfig;
 import com.scarlatti.bump.cli.ActionSelector;
-import com.scarlatti.bump.cli.CLIConfig;
+import com.scarlatti.bump.config.CLIConfig;
+import com.scarlatti.bump.util.BannerDisplay;
 
 /**
  * ______    __                         __           ____             __     __  __  _
